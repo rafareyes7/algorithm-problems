@@ -33,8 +33,8 @@ func threeNumberSum(array []int, target int) [][]int {
 			continue
 		}
 
-		mid, left := first+1, len(array)-1
-		for mid < left {
+		mid, last := first+1, len(array)-1
+		for mid < last {
 
 			if mid > first+1 && array[mid-1] == array[mid] {
 				// duplicated elem found -> [2, 3, 3, first:5, first+1:6, mid-1:7, mid:7, ...]
@@ -42,15 +42,15 @@ func threeNumberSum(array []int, target int) [][]int {
 				continue
 			}
 
-			currentSum := array[first] + array[mid] + array[left]
+			currentSum := array[first] + array[mid] + array[last]
 			if currentSum < target {
 				mid++
 			} else if currentSum > target {
-				left--
+				last--
 			} else {
-				triplets = append(triplets, []int{array[first], array[mid], array[left]})
+				triplets = append(triplets, []int{array[first], array[mid], array[last]})
 				mid++
-				left--
+				last--
 			}
 		}
 	}
