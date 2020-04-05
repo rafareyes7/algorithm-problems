@@ -21,6 +21,7 @@ example:
 
 */
 
+// Time: O(n) | Space: O(1)
 func isMonotonic(array []int) bool {
 	if len(array) <= 2 {
 		return true
