@@ -35,13 +35,14 @@ func largestSubarrayRange(arr []int) []int {
 
 	// Push all the elements into the map
 	// with the num as the key and the value initialized as true, meaning
-	// that the element has not been visited.
+	// that the element has not been visited, so it can be visited.
+	// Elements in the array can be visited one time.
 	numsMap := map[int]bool{}
 	for _, num := range arr {
 		numsMap[num] = true
 	}
 
-	// Start iterating the array checking if the current number is in the map
+	// Start iterating the array checking if the current number is in the map is
 	// available to be visited (value = true), if so then start the range checking
 	// by expanding <- ->
 	for _, num := range arr {
@@ -59,7 +60,7 @@ func largestSubarrayRange(arr []int) []int {
 		leftIdx := num - 1
 		// <- while the number is in our map
 		for numsMap[leftIdx] {
-			// because we're visiting, must mark it as visited (false)
+			// because we're visiting, must mark it as false (the num is not able to be visited again)
 			numsMap[leftIdx] = false
 			currentRangeLength++
 			leftIdx--
@@ -67,17 +68,16 @@ func largestSubarrayRange(arr []int) []int {
 		// Expand to the right, checking if the next values of the current num
 		// are contained in the array and are able to visit (value = true)
 		rightIdx := num + 1
-		// <- while the number is in our map
+		// while -> the number is in our map
 		for numsMap[rightIdx] {
-			// because we're visiting, must mark it as visited (false)
+			// because we're visiting, must mark it as false (the num is not able to be visited again)
 			numsMap[rightIdx] = false
 			currentRangeLength++
 			rightIdx++
 		}
 
-		// Check the largest path
+		// Is the current range the largest?
 		if currentRangeLength > largestRange {
-			// Is the largest range
 			largestRange = currentRangeLength
 			// Get the indexes of the start and end of the range
 			result = []int{leftIdx + 1, rightIdx - 1}
