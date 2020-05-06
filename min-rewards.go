@@ -57,19 +57,19 @@ func fill(arr []int, commonValue int) {
 }
 
 func getLocalMinIndexes(arr []int) []int {
-	// min peak is a number which is lower than both numbers on the side.
+	// Local min is a number which is lower than both numbers on its side.
 	if len(arr) < 1 {
 		return []int{0}
 	}
-	minPeakIndexes := []int{}
+	localMinIndexes := []int{}
 	for i := 0; i < len(arr); i++ {
-		// At the start of the array, I can only check right side
+		// At the start of the array, only right side can be compared.
 		if i == 0 && arr[i] < arr[i+1] {
-			minPeakIndexes = append(minPeakIndexes, i)
+			localMinIndexes = append(localMinIndexes, i)
 		}
-		// At the end of the array I can only check left side
+		// At the end of the array, only left side can be compared.
 		if i == len(arr)-1 && arr[i] < arr[i-1] {
-			minPeakIndexes = append(minPeakIndexes, i)
+			localMinIndexes = append(localMinIndexes, i)
 		}
 		// To avoid index out of range
 		if i == 0 || i == len(arr)-1 {
@@ -77,11 +77,11 @@ func getLocalMinIndexes(arr []int) []int {
 		}
 
 		if arr[i] < arr[i-1] && arr[i] < arr[i+1] {
-			minPeakIndexes = append(minPeakIndexes, i)
+			localMinIndexes = append(localMinIndexes, i)
 		}
 	}
 
-	return minPeakIndexes
+	return localMinIndexes
 }
 
 func expandFromLocalMin(localMinIdx int, scores []int, rewards []int) {
